@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Map Project</title>
+
+</head>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js"></script>
+<body>
+  
+  <div class="container">
+<div class="container">
+  
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Map Project</h1>
+    <p class="lead"><strong>Click</strong> on the region to view total sales details </p>
+  </div>
+</div>
+  
+  <div class="row">
+    <div class="col-lg-6">
+      <img src="https://i.imgur.com/WzbOBsD.png" alt="" usemap="#Map" />
+<map name="Map" id="Map">
+    <area alt="" 
+    title="" 
+    href="" 
+    id="southMumbai"
+    shape="poly" coords="29,438,28,428,30,419,38,413,40,405,44,400,49,398,51,393,49,387,49,381,49,375,53,363,51,355,51,346,64,352,74,348,79,338,80,329,81,316,95,316,99,314,106,309,116,309,124,316,130,320,128,328,126,339,124,349,117,358,107,377,104,390,100,398,93,415,88,425,90,434,86,441,84,447,79,452,75,460,69,462,68,467,64,469,60,471,57,478,53,482,48,489,41,488,44,467,46,468,52,468,53,465,59,465,61,461,62,456,61,452,60,445,60,441,61,433,59,427,53,427,37,417,45,427,45,424" />
+    <area alt="" title="" id="northMumbai"  
+    href=""
+    shape="poly" 
+    coords="78,317,73,319,66,322,60,324,55,321,57,317,61,313,58,308,59,301,59,296,59,289,59,283,59,278,63,273,63,266,63,261,65,256,62,251,59,245,57,238,53,233,53,226,47,224,42,217,37,213,30,213,25,222,21,219,21,213,21,205,17,199,16,193,14,186,14,184,20,179,24,175,26,169,29,161,31,153,35,146,38,138,44,131,49,124,53,116,61,109,63,101,65,96,69,91,61,94,58,101,52,105,47,111,44,120,38,125,34,131,29,132,28,138,28,145,28,151,21,154,13,151,13,145,14,138,17,140,12,136,10,131,10,125,10,116,12,108,15,98,13,91,14,84,16,76,20,75,29,74,36,77,45,79,53,82,61,85,73,88,78,86,84,82,84,76,85,71,88,69,99,70,102,69,109,70,113,73,117,77,123,80,129,84,124,86,124,89,121,92,121,100,115,105,136,84,137,82,145,85,156,83,165,81,179,81,185,81,196,81,208,81,216,81,213,97,202,109,196,100,200,106,205,117,209,125,208,133,203,146,200,152,200,159,213,161,221,166,230,167,241,170,243,173,241,187,244,199,242,212,234,217,226,228,224,236,217,247,214,253,212,262,212,269,212,277,216,285,217,289,224,297,225,302,226,316,224,331,221,337,214,342,210,347,198,353,186,361,174,368,171,372,161,381,153,381,142,381,137,382,130,381,123,381,115,381,113,377,112,367,117,364,121,357,126,353,126,345,129,338,129,333,132,327,133,317,132,311,120,307,81,313,74,316" />
+    <area alt="" title="" href="" id="naviMumbai" shape="poly" coords="247,157,247,173,253,190,245,205,245,217,241,228,237,238,237,253,239,273,239,289,242,298,250,317,252,317,262,347,263,368,270,378,281,378,293,377,292,382,287,388,261,397,252,401,217,403,213,409,213,417,206,427,216,453,228,469,217,473,209,474,193,474,169,480,158,487,160,496,397,494,399,325,343,272,341,274,317,219,308,198,293,207" />
+   
+</map>
+    </div>
+    <div class="col-lg-6">
+      <h2 id="head"></h2>
+
+     <div style="width: 400px;background-color: black;color: white;font-size: 30px">
+      <span><strong>Sale Date</strong></span>
+       <span style="float: right;"><strong>Amount</strong></span></div>
+      <table class="table table-bordered" style="width: 400px;font-size: 22px">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+    </div>
+  </div>
+</div>
+</div>
+</map>
+</map>
+
+
+<style type="text/css">
+  area {overflow: visible; }
+
+  area:focus {outline: red 3px solid !important}
+  
+</style>
+
+<script type="text/javascript">
+  
+  
+  $("area").on("click", function(e){
+    e.preventDefault();
+
+   $("thead").children("tr").remove()
+
+   var regionName = $(this).attr('id')
+   fetch("http://localhost:3000/" + regionName)
+   .then(response => response.json().then( function (data) {
+     var appendTextArray = []
+
+
+
+      data.forEach( function(element, index) {
+
+        let parsedDate = new Date(element.saleDate)
+
+
+          appendTextArray.push("<tr>")
+          appendTextArray.push("<td>")
+          appendTextArray.push(parsedDate.toDateString())
+          appendTextArray.push("</td>")
+          appendTextArray.push("<td>")
+          appendTextArray.push(element.saleAmount)
+          appendTextArray.push("</td>")
+          appendTextArray.push("</tr>")
+            
+      });
+
+      var appendText = appendTextArray.join(" ")
+        $("thead").append(appendText)
+   }
+
+
+    )) 
+
+      // var appendText = ""
+
+  
+
+      //  $("thead").append("")
+    })
+
+</script>
+
+
+</body>
+</html>
