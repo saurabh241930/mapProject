@@ -18,6 +18,6 @@ then in your browser [open this link](http://localhost:4000/)
 ![](https://i.imgur.com/SM48q1S.gif)
 
 Data in database as required
-![alt text](https://i.imgur.com/1gNhMky.png)
+![alt text](https://i.imgur.com/uGpiBR5.png)
 
 
