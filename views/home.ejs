@@ -59,7 +59,6 @@
 
 <style type="text/css">
   area {overflow: visible; }
-
   area:focus {outline: red 3px solid !important}
   
 </style>
@@ -69,46 +68,32 @@
   
   $("area").on("click", function(e){
     e.preventDefault();
-
    $("thead").children("tr").remove()
-
    var regionName = $(this).attr('id')
    fetch("http://localhost:3000/" + regionName)
    .then(response => response.json().then( function (data) {
      var appendTextArray = []
-
-
-
       data.forEach( function(element, index) {
-
-        let parsedDate = new Date(element.saleDate)
-
-
+        let parsedDate = new Date(element.date)
           appendTextArray.push("<tr>")
           appendTextArray.push("<td>")
           appendTextArray.push(parsedDate.toDateString())
           appendTextArray.push("</td>")
           appendTextArray.push("<td>")
-          appendTextArray.push(element.saleAmount)
+          appendTextArray.push(element.amount)
           appendTextArray.push("</td>")
           appendTextArray.push("</tr>")
             
       });
-
       var appendText = appendTextArray.join(" ")
         $("thead").append(appendText)
+
    }
-
-
     )) 
-
       // var appendText = ""
-
   
-
       //  $("thead").append("")
     })
-
 </script>
 
 

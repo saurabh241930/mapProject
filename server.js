@@ -1,16 +1,8 @@
 var bodyParser = require('body-parser'),
-  mongoose = require('mongoose'),
-  express = require('express')
+    knex = require('knex'),
+    express = require('express')
 
-  app = express();
-
-
-var Record = require('./models/Record');
-
-
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mapProject',{ useNewUrlParser: true });
+    app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -19,39 +11,39 @@ app.use(bodyParser.urlencoded({
 }));
 
 
+const db = knex({
+  client: 'pg',
+  connection: {
+    host : '127.0.0.1',
+    user : 'saurabh',
+    password : '1234567890',
+    database : 'recordDB'
+  }
+});
+
+
 app.get("/",function (req,res) {
 	var records = ""
- res.render("home",{records:records})
-})
-
-app.get("/recordForm",function (req,res) {
- res.render("recordForm")
+ res.render("home")
 })
 
 
+app.get("/:region",function (req,res) {
 
+	db('records')
+   .where('region', req.params.region)
+   .then(records => res.json(records))
+    
+})
 
 
 app.post("/addRecord",function (req,res) {
 
-	let saleDate = new Date(req.body.saleDate);
-
-
- var newRecord = {
- 	regionName:req.body.regionName,
- 	saleDate:saleDate.toDateString(),
- 	saleAmount:req.body.saleAmount
- }
-
- Record.create(newRecord,function(err,record){
- 	if (err) {
- 		console.log(err)
- 	} else {
-
- 		console.log(record)
- 	}
- })
-
+db('records').insert({
+	region:req.body.regionName,
+	date:req.body.saleDate,
+	amount:req.body.saleAmount
+}).then(console.log)
 res.redirect("back")
 
 })
@@ -59,24 +51,12 @@ res.redirect("back")
 
 
 
-app.get("/:region",function (req,res) {
-    
-   Record.find({"regionName":req.params.region},function (err,records) {
-      if (err) {
-      	console.log(err)
-      } else {
 
-     
-
-         res.json(records)
-      }
-   })
+app.get("/recordForm",function (req,res) {
+ res.render("recordForm")
 })
 
 
-
-
-
-app.listen(3000, function() {
+  app.listen(3000, function() {
   console.log('Server started');
 });
