@@ -15,6 +15,9 @@ npm start
 
 then in your browser [open this link](http://localhost:4000/)
 
-![](https://im2.ezgif.com/tmp/ezgif-2-59074ec3dd.gif)
+![](https://i.imgur.com/SM48q1S.gif)
+
+Data in database as required
+![alt text](https://i.imgur.com/1gNhMky.png)
 
 
