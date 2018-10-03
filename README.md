@@ -1,4 +1,6 @@
 # mapProject
+![](https://i.imgur.com/SM48q1S.gif)
+
 
 Rather than putting data statically ,I have created a **POST** form of route `/addRecord` to insert data in Table *records*
 
@@ -15,7 +17,7 @@ npm start
 
 then in your browser [open this link](http://localhost:4000/)
 
-![](https://i.imgur.com/SM48q1S.gif)
+
 
 
 
